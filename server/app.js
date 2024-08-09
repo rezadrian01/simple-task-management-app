@@ -15,6 +15,8 @@ config();
 
 app.use(cors()).use(bodyParser.json());
 
+app.use("/auth", authRoutes);
+
 app.use((err, req, res, next) => {
   const message = err.message || "An error occurred";
   const data = err.data || [];

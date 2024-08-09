@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const { google } = require("googleapis");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+const { config } = require("dotenv");
+config();
 
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
@@ -32,9 +36,43 @@ exports.getAuthCallback = async (req, res, next) => {
       auth: oauth2Client,
     });
     const { data } = await oauth2.userinfo.get();
-    if (!data) {
+    console.log(data);
+    if (!data.name || !data.email) {
       throw new Error();
     }
+    const user = await User.findOne({ email: data.email });
+    let token;
+    if (user) {
+      token = jwt.sign(
+        {
+          userId: user._id,
+          email: user.email,
+          name: user.name,
+        },
+        process.env.SECRET_KEY,
+        { expiresIn: "365d" }
+      );
+    } else {
+      const newUser = new User({
+        email: data.email,
+        name: data.name,
+      });
+      const createdUser = await newUser.save();
+      token = jwt.sign(
+        {
+          userId: createdUser._id,
+          email: createdUser.email,
+          name: createdUser.name,
+        },
+        process.env.SECRET_KEY,
+        { expiresIn: "365d" }
+      );
+    }
+    res.status(200).json({
+      success: true,
+      message: "Auth Success",
+      token,
+    });
   } catch (err) {
     next(err);
   }
