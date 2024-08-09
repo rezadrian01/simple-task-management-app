@@ -7,7 +7,7 @@ config();
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  "http://localhost:8080/auth/google/callback"
+  `${process.env.DOMAIN_API}/auth/google/callback`
 );
 
 const scopes = [

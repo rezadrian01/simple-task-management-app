@@ -34,9 +34,14 @@ exports.getTasks = async (req, res, next) => {
     }
     const tasks = await Task.find({ userId: req.userId });
     const totalTasks = await Task.find({ userId: req.userId }).countDocuments();
-    res
-      .status(200)
-      .json({ message: "Success get tasks", success: true, tasks, totalTasks });
+    setTimeout(() => {
+      res.status(200).json({
+        message: "Success get tasks",
+        success: true,
+        tasks,
+        totalTasks,
+      });
+    }, 2000);
   } catch (err) {
     next(err);
   }

@@ -1,16 +1,34 @@
-import { json, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
+import { Await, defer, json, redirect, useLoaderData } from "react-router-dom";
 
 export default function HomePage() {
   const data = useLoaderData();
   return (
     <>
-      <h1>HomePage</h1>
+      <Suspense fallback={<p>Loading...</p>}>
+        <Await resolve={data.tasks}>
+          {(fetchData) => {
+            return <h1>HomePage</h1>;
+          }}
+        </Await>
+      </Suspense>
     </>
   );
 }
 
-export async function loader() {
-  const response = await fetch(`${import.meta.env.VITE_DOMAIN_API}`);
+async function fetchTasks() {
+  const userId = localStorage.getItem("token");
+
+  const response = await fetch(
+    `${import.meta.env.VITE_DOMAIN_API}/task/tasks`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${userId}`,
+      },
+    }
+  );
   const resData = await response.json();
   if (!response.ok) {
     throw json(
@@ -19,4 +37,13 @@ export async function loader() {
     );
   }
   return resData;
+}
+
+export function loader() {
+  if (!localStorage.getItem("token")) {
+    return redirect("/auth");
+  }
+  return defer({
+    tasks: fetchTasks(),
+  });
 }
