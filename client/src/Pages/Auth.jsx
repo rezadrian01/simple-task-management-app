@@ -1,21 +1,27 @@
-import { redirect, useNavigate, useSubmit } from "react-router-dom";
-
 export default function Auth() {
-  const submit = useSubmit();
-  const navigate = useNavigate();
   async function handleEmailClick() {
-    // const response = await fetch(
-    //   `${import.meta.env.VITE_DOMAIN_API}/auth/google`
-    // );
-    // const resData = await response.json();
-    // console.log(resData);
     window.location.href = `${import.meta.env.VITE_DOMAIN_API}/auth/google`;
   }
   return (
     <>
-      <h1>Authentication</h1>
-      <div className="bg-sky-500 min-h-[50vh] text-slate-200">
-        <button onClick={handleEmailClick}>Login with email</button>
+      <div className="bg-emerald-600/50 min-h-[50vh]  w-11/12 md:w-5/6 lg:w-1/2 mx-auto rounded-lg shadow-lg p-6 flex flex-col gap-4 items-center">
+        <div className="border-b-2 border-b-emerald-600 ">
+          <h3 className="font-medium text-xl lg:text-3xl tracking-wide">
+            Login with one click
+          </h3>
+        </div>
+        <button
+          className="border-2 border-green-600 px-2 py-1 lg:px-4 lg:py-2 rounded hover:bg-emerald-700 hover:-translate-y-1 transition-transform"
+          onClick={handleEmailClick}
+        >
+          Login with Email
+        </button>
+        <div>
+          <p className="text-sm lg:text-base">Or</p>
+        </div>
+        <button className="border-2 border-green-600 px-2 py-1 lg:px-4 lg:py-2 rounded hover:bg-emerald-700 hover:-translate-y-1 transition-transform">
+          Login with Facebook
+        </button>
       </div>
     </>
   );

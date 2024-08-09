@@ -35,7 +35,6 @@ exports.getAuthCallback = async (req, res, next) => {
       auth: oauth2Client,
     });
     const { data } = await oauth2.userinfo.get();
-    console.log(data);
     if (!data.name || !data.email) {
       throw new Error();
     }
@@ -63,11 +62,14 @@ exports.getAuthCallback = async (req, res, next) => {
         { expiresIn: "365d" }
       );
     }
-    res.status(200).json({
-      success: true,
-      message: "Auth Success",
-      token,
-    });
+    return res.redirect(
+      `${process.env.CLIENT_DOMAIN}/auth/callback?token=${token}`
+    );
+    // res.status(200).json({
+    //   success: true,
+    //   message: "Auth Success",
+    //   token,
+    // });
   } catch (err) {
     next(err);
   }
