@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const { google } = require("googleapis");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
@@ -46,8 +45,6 @@ exports.getAuthCallback = async (req, res, next) => {
       token = jwt.sign(
         {
           userId: user._id,
-          email: user.email,
-          name: user.name,
         },
         process.env.SECRET_KEY,
         { expiresIn: "365d" }
@@ -61,8 +58,6 @@ exports.getAuthCallback = async (req, res, next) => {
       token = jwt.sign(
         {
           userId: createdUser._id,
-          email: createdUser.email,
-          name: createdUser.name,
         },
         process.env.SECRET_KEY,
         { expiresIn: "365d" }
