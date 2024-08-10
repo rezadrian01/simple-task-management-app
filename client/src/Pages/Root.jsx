@@ -12,6 +12,7 @@ export default function RootLayout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const authState = useSelector((state) => state.auth);
+  const tasksState = useSelector((state) => state.tasks);
   const navigation = useNavigation();
   const [isCreate, setIsCreate] = useState(false);
 
@@ -40,7 +41,6 @@ export default function RootLayout() {
   function stopCreate() {
     setIsCreate(false);
   }
-
   async function handleSubmit(event) {
     event.preventDefault();
     const fd = new FormData(event.target);
@@ -60,7 +60,9 @@ export default function RootLayout() {
     if (!response.ok) {
       throw new Error();
     }
-    window.location.href = `${import.meta.env.VITE_DOMAIN_FRONTEND}`;
+    stopCreate();
+    dispatch(tasksAction.addTask({ task: { ...resData.createdTask } }));
+    // window.location.href = `${import.meta.env.VITE_DOMAIN_FRONTEND}`;
   }
 
   return (

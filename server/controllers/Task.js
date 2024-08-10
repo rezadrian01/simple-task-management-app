@@ -25,7 +25,9 @@ exports.createTask = async (req, res, next) => {
     const createdTask = await task.save();
     user.tasks.push(createdTask);
     await user.save();
-    res.status(201).json({ message: "Success create task", success: true });
+    res
+      .status(201)
+      .json({ message: "Success create task", success: true, createdTask });
   } catch (err) {
     next(err);
   }
