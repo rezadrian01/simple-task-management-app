@@ -15,9 +15,10 @@ const taskSchema = new Schema(
       type: String,
       required: true,
     },
-    isCompleted: {
-      type: Boolean,
+    status: {
+      type: String,
       required: true,
+      default: "process",
     },
     userId: {
       type: Schema.Types.ObjectId,

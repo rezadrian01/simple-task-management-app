@@ -1,8 +1,9 @@
-import { Suspense, useEffect, useState } from "react";
-import { Await } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import TaskItem from "./TaskItem";
 
-export default function Tasks() {
+export default function ProcessTasks() {
   const [data, setData] = useState({
     tasks: [],
     totalTasks: 0,

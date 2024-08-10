@@ -1,20 +1,41 @@
-import { Suspense } from "react";
 import { Await, defer, json, redirect, useLoaderData } from "react-router-dom";
-import TaskItem from "../components/TaskItem";
-import Tasks from "../components/Tasks";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { tasksAction } from "../store";
+
 import CompletedTasks from "../components/CompletedTask";
-import FailedTasks from "../components/FailedTask";
+
+import { Suspense, useEffect } from "react";
+import ProcessTasks from "../components/ProcessTasks";
+import IncompletedTasks from "../components/IncompletedTasks";
 
 export default function HomePage() {
+  const dispatch = useDispatch();
   const uiState = useSelector((state) => state.ui);
   const data = useLoaderData();
-  console.log(uiState);
+  useEffect(() => {
+    async function storeData() {
+      const resolvedData = await data.tasks;
+      dispatch(tasksAction.replaceTask({ tasks: [...resolvedData.tasks] }));
+    }
+    storeData();
+  }, [data]);
+
   return (
     <>
-      {uiState === "tasks" && <Tasks />}
-      {uiState === "completedTasks" && <CompletedTasks />}
-      {uiState === "failedTasks" && <FailedTasks />}
+      <Suspense
+        fallback={
+          <p className="animate-pulse text-center text-lg">
+            Fetching your tasks...
+          </p>
+        }
+      >
+        <Await resolve={data}>
+          {uiState === "process" && <ProcessTasks />}
+          {uiState === "completedTasks" && <CompletedTasks />}
+          {uiState === "failedTasks" && <IncompletedTasks />}
+        </Await>
+      </Suspense>
     </>
   );
 }
