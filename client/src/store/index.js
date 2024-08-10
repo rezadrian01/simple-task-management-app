@@ -33,6 +33,9 @@ const taskSlices = createSlice({
       const tasks = [...action.payload.tasks];
       state.tasks = tasks;
     },
+    resetTasks(state, action) {
+      state.tasks = [];
+    },
   },
 });
 
@@ -63,11 +66,34 @@ const uiSlice = createSlice({
   },
 });
 
+const authSlice = createSlice({
+  name: "auth",
+  initialState: {
+    isLoggedIn: false,
+  },
+  reducers: {
+    login(state, action) {
+      state.isLoggedIn = true;
+    },
+    logout(state, action) {
+      state.isLoggedIn = false;
+    },
+    check(state, action) {
+      state.isLoggedIn = localStorage.getItem("token") ? true : false;
+    },
+  },
+});
+
 const store = configureStore({
-  reducer: { tasks: taskSlices.reducer, ui: uiSlice.reducer },
+  reducer: {
+    tasks: taskSlices.reducer,
+    ui: uiSlice.reducer,
+    auth: authSlice.reducer,
+  },
 });
 
 export default store;
 
 export const tasksAction = taskSlices.actions;
 export const uiAction = uiSlice.actions;
+export const authAction = authSlice.actions;
