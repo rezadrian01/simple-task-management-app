@@ -1,19 +1,58 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { tasksAction } from "../store";
 
 export default function TaskItem({ task }) {
+  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
+  const tasksState = useSelector((state) => state.tasks);
   const formattedDate = new Date(task.deadline).toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
     year: "numeric",
   });
-  function handleIncompletedClick() {
-    dispatch(tasksAction.incompletedTask(task._id));
+
+  async function sendRequest(status) {
+    const response = await fetch(
+      `${import.meta.env.VITE_DOMAIN_API}/task/task/${task._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ...task,
+          status: status,
+        }),
+      }
+    );
+    const resData = await response.json();
+    if (!response.status) {
+      throw new Error();
+    }
+    return resData;
   }
-  function handleCompletedClick() {
-    dispatch(tasksAction.completedTask(task._id));
+
+  async function handleIncompletedClick() {
+    let tempTasks;
+    try {
+      tempTasks = [...tasksState.tasks];
+      dispatch(tasksAction.incompletedTask(task._id));
+      await sendRequest("incompleted");
+    } catch (err) {
+      dispatch(tasksAction.replaceTask({ tasks: [...tempTasks] }));
+    }
+  }
+  async function handleCompletedClick() {
+    let tempTasks;
+    try {
+      tempTasks = [...tasksState.tasks];
+      dispatch(tasksAction.completedTask(task._id));
+      await sendRequest("completed");
+    } catch (err) {
+      dispatch(tasksAction.replaceTask({ tasks: [...tempTasks] }));
+    }
   }
   return (
     <li className="p-4 rounded-lg border-2 border-emerald-900">

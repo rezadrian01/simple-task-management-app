@@ -93,6 +93,7 @@ exports.updateTask = async (req, res, next) => {
     task.description = req.body.description || task.description;
     task.deadline = req.body.deadline || task.deadline;
     task.isCompleted = req.body.isCompleted || task.isCompleted;
+    task.status = req.body.status || task.status;
     await task.save();
     res.status(200).json({ message: "Success update task", success: true });
   } catch (err) {

@@ -11,16 +11,22 @@ export default function TabMenu() {
   return (
     <>
       <ul className="flex gap-8 mb-8">
-        <TabButton menu="process" onClick={() => handleClick("process")}>
+        <TabButton
+          layoutId="tabMenu"
+          menu="process"
+          onClick={() => handleClick("process")}
+        >
           <span className="relative pointer-events-none">Your tasks</span>
         </TabButton>
         <TabButton
+          layoutId="tabMenu"
           menu="completedTasks"
           onClick={() => handleClick("completedTasks")}
         >
           <span className="relative pointer-events-none">Completed tasks</span>
         </TabButton>
         <TabButton
+          layoutId="tabMenu"
           menu="failedTasks"
           onClick={() => handleClick("failedTasks")}
         >
