@@ -56,7 +56,7 @@ const uiSlice = createSlice({
       return state;
     },
     failedTask(state, action) {
-      state = "failedTasks";
+      state = "incompletedTasks";
       return state;
     },
     changeMenu(state, action) {
@@ -69,7 +69,7 @@ const uiSlice = createSlice({
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isLoggedIn: false,
+    isLoggedIn: false || localStorage.getItem("token"),
   },
   reducers: {
     login(state, action) {

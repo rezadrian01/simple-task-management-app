@@ -27,8 +27,8 @@ export default function TabMenu() {
         </TabButton>
         <TabButton
           layoutId="tabMenu"
-          menu="failedTasks"
-          onClick={() => handleClick("failedTasks")}
+          menu="incompletedTasks"
+          onClick={() => handleClick("incompletedTasks")}
         >
           <span className="relative pointer-events-none">
             Incompleted tasks

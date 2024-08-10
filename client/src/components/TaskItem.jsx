@@ -55,7 +55,7 @@ export default function TaskItem({ task }) {
     }
   }
   return (
-    <li className="p-4 rounded-lg border-2 border-emerald-900">
+    <li className="p-4 rounded-lg border-2 border-emerald-900 shadow-lg">
       <div className="flex justify-between mb-2 items-center">
         <h3 className="font-semibold text-2xl">{task.title}</h3>
         <p>{formattedDate}</p>

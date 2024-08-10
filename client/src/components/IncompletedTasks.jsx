@@ -1,19 +1,19 @@
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 import TaskItem from "./TaskItem";
 
-export default function IncompletedTasks() {
+export default function IncompletedTasks({ layoutId }) {
   const tasksState = useSelector((state) => state.tasks);
   const incompletedTasks = tasksState.tasks.filter(
     (task) => task.status === "incompleted"
   );
   return (
-    <>
-      <h1 className="text-4xl font-semibold mb-6">Incompleted tasks</h1>
+    <motion.div layoutId={layoutId}>
       {incompletedTasks.length === 0 && (
         <p className="text-center">You dont have any tasks yet.</p>
       )}
-      <ul className="flex flex-col gap-4 mb-4">
+      <ul className="flex flex-col gap-4 mb-10">
         {incompletedTasks.map((task) => {
           return <TaskItem task={task} key={task._id} />;
         })}
@@ -21,6 +21,6 @@ export default function IncompletedTasks() {
       {incompletedTasks.length > 0 && (
         <p>Total tasks: {incompletedTasks.length}</p>
       )}
-    </>
+    </motion.div>
   );
 }

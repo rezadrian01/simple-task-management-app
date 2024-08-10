@@ -21,6 +21,14 @@ export default function HomePage() {
     storeData();
   }, [data]);
 
+  let tabTitle = "Your Task";
+  if (uiState === "completedTasks") {
+    tabTitle = "Completed Tasks";
+  }
+  if (uiState === "incompletedTasks") {
+    tabTitle = "Incompleted Tasks";
+  }
+
   return (
     <>
       <Suspense
@@ -30,10 +38,11 @@ export default function HomePage() {
           </p>
         }
       >
-        <Await resolve={data}>
+        <Await resolve={data.tasks}>
+          <h1 className="text-4xl font-semibold mb-6">{tabTitle}</h1>
           {uiState === "process" && <ProcessTasks />}
           {uiState === "completedTasks" && <CompletedTasks />}
-          {uiState === "failedTasks" && <IncompletedTasks />}
+          {uiState === "incompletedTasks" && <IncompletedTasks />}
         </Await>
       </Suspense>
     </>
