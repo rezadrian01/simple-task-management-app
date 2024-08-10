@@ -4,7 +4,7 @@ export default function Auth() {
   }
   return (
     <>
-      <div className="bg-emerald-600/50 min-h-[50vh]  w-11/12 md:w-5/6 lg:w-1/2 mx-auto rounded-lg shadow-lg p-6 flex flex-col gap-4 items-center">
+      <div className="bg-emerald-600/50 min-h-[50vh]   mx-auto rounded-lg shadow-lg p-6 flex flex-col gap-4 items-center">
         <div className="border-b-2 border-b-emerald-600 ">
           <h3 className="font-medium text-xl lg:text-3xl tracking-wide">
             Login with one click

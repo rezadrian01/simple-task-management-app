@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import TabMenu from "../components/TabMenu";
 
 export default function RootLayout() {
   const isLoggedIn = localStorage.getItem("token");
@@ -17,7 +18,8 @@ export default function RootLayout() {
           {!isLoggedIn && <a>Login</a>}
         </div>
       </nav> */}
-      <main className="bg-emerald-800 min-h-screen pt-32 text-slate-200">
+      <main className="bg-emerald-800 min-h-screen pt-32 text-slate-200 px-2  md:px-8 lg:px-44">
+        {isLoggedIn && <TabMenu />}
         <Outlet />
       </main>
     </>

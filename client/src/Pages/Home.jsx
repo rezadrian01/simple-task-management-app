@@ -1,14 +1,37 @@
 import { Suspense } from "react";
 import { Await, defer, json, redirect, useLoaderData } from "react-router-dom";
+import TaskItem from "../components/TaskItem";
 
 export default function HomePage() {
   const data = useLoaderData();
   return (
     <>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense
+        fallback={
+          <p className="animate-pulse text-center text-lg">
+            Fetching your tasks...
+          </p>
+        }
+      >
         <Await resolve={data.tasks}>
           {(fetchData) => {
-            return <h1>HomePage</h1>;
+            const { tasks, totalTasks } = fetchData;
+            return (
+              <>
+                <h1 className="text-4xl font-semibold mb-6">Your task</h1>
+                {tasks.length === 0 && (
+                  <p className="text-center">You dont have any tasks yet.</p>
+                )}
+                <ul className="flex flex-col gap-4 mb-4">
+                  {tasks.map((task) => {
+                    return <TaskItem task={task} key={task._id} />;
+                  })}
+                </ul>
+                {totalTasks && totalTasks > 0 && (
+                  <p>Total tasks: {totalTasks}</p>
+                )}
+              </>
+            );
           }}
         </Await>
       </Suspense>

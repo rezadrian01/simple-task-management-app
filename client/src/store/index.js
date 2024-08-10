@@ -24,8 +24,32 @@ const taskSlices = createSlice({
   },
 });
 
+const uiSlice = createSlice({
+  name: "ui",
+  initialState: "tasks",
+  reducers: {
+    tasks: (state, action) => {
+      state = "tasks";
+      return state;
+    },
+    completedTask: (state, action) => {
+      state = "completedTask";
+    },
+    failedTask: (state, action) => {
+      state = "failedTask";
+    },
+    changeMenu: (state, action) => {
+      state = action.payload;
+      return state;
+    },
+  },
+});
+
 const store = configureStore({
-  reducer: { tasks: taskSlices.reducer },
+  reducer: { tasks: taskSlices.reducer, ui: uiSlice.reducer },
 });
 
 export default store;
+
+export const taskAction = taskSlices.actions;
+export const uiAction = uiSlice.actions;

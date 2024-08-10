@@ -11,6 +11,10 @@ exports.createTask = async (req, res, next) => {
     const title = req.body.title;
     const deadline = req.body.deadline;
     const description = req.body.description;
+    const user = await User.findById(req.userId);
+    if (!user) {
+      throw new Error();
+    }
     const task = new Task({
       title,
       deadline,
@@ -18,9 +22,11 @@ exports.createTask = async (req, res, next) => {
       userId: req.userId,
       isCompleted: false,
     });
-    await task.save();
+    const createdTask = await task.save();
+    user.tasks.push(createdTask);
+    await user.save();
     res.status(201).json({ message: "Success create task", success: true });
-  } catch {
+  } catch (err) {
     next(err);
   }
 };
@@ -34,14 +40,14 @@ exports.getTasks = async (req, res, next) => {
     }
     const tasks = await Task.find({ userId: req.userId });
     const totalTasks = await Task.find({ userId: req.userId }).countDocuments();
-    setTimeout(() => {
-      res.status(200).json({
-        message: "Success get tasks",
-        success: true,
-        tasks,
-        totalTasks,
-      });
-    }, 2000);
+    // setTimeout(() => {
+    res.status(200).json({
+      message: "Success get tasks",
+      success: true,
+      tasks,
+      totalTasks,
+    });
+    // }, 2000);
   } catch (err) {
     next(err);
   }
