@@ -29,7 +29,10 @@ export default function TaskItem({ task }) {
         >
           Mark as incompleted
         </button>
-        <button onClick={handleCompletedClick} className="">
+        <button
+          onClick={handleCompletedClick}
+          className="hover:underline underline-offset-4"
+        >
           Mark as completed
         </button>
       </div>
