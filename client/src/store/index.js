@@ -33,10 +33,12 @@ const uiSlice = createSlice({
       return state;
     },
     completedTask: (state, action) => {
-      state = "completedTask";
+      state = "completedTasks";
+      return state;
     },
     failedTask: (state, action) => {
-      state = "failedTask";
+      state = "failedTasks";
+      return state;
     },
     changeMenu: (state, action) => {
       state = action.payload;

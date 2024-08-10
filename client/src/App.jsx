@@ -13,7 +13,7 @@ export default function App() {
         {
           index: true,
           element: <HomePage />,
-          loader: tasksLoader,
+          // loader: tasksLoader,
         },
         {
           path: "auth",

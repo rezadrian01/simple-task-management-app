@@ -1,40 +1,20 @@
 import { Suspense } from "react";
 import { Await, defer, json, redirect, useLoaderData } from "react-router-dom";
 import TaskItem from "../components/TaskItem";
+import Tasks from "../components/Tasks";
+import { useSelector } from "react-redux";
+import CompletedTasks from "../components/CompletedTask";
+import FailedTasks from "../components/FailedTask";
 
 export default function HomePage() {
+  const uiState = useSelector((state) => state.ui);
   const data = useLoaderData();
+  console.log(uiState);
   return (
     <>
-      <Suspense
-        fallback={
-          <p className="animate-pulse text-center text-lg">
-            Fetching your tasks...
-          </p>
-        }
-      >
-        <Await resolve={data.tasks}>
-          {(fetchData) => {
-            const { tasks, totalTasks } = fetchData;
-            return (
-              <>
-                <h1 className="text-4xl font-semibold mb-6">Your task</h1>
-                {tasks.length === 0 && (
-                  <p className="text-center">You dont have any tasks yet.</p>
-                )}
-                <ul className="flex flex-col gap-4 mb-4">
-                  {tasks.map((task) => {
-                    return <TaskItem task={task} key={task._id} />;
-                  })}
-                </ul>
-                {totalTasks && totalTasks > 0 && (
-                  <p>Total tasks: {totalTasks}</p>
-                )}
-              </>
-            );
-          }}
-        </Await>
-      </Suspense>
+      {uiState === "tasks" && <Tasks />}
+      {uiState === "completedTasks" && <CompletedTasks />}
+      {uiState === "failedTasks" && <FailedTasks />}
     </>
   );
 }

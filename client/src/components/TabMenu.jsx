@@ -21,14 +21,14 @@ export default function TabMenu() {
         <TabButton
           layoutId="tabMenu"
           menu="completedTask"
-          onClick={() => handleClick("completedTask")}
+          onClick={() => handleClick("completedTasks")}
         >
           Completed tasks
         </TabButton>
         <TabButton
           layoutId="tabMenu"
           menu="failedTask"
-          onClick={() => handleClick("failedTask")}
+          onClick={() => handleClick("failedTasks")}
         >
           Failed tasks
         </TabButton>
