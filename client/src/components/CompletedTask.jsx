@@ -10,6 +10,11 @@ export default function CompletedTasks({ layoutId }) {
   );
   return (
     <motion.div layoutId={layoutId}>
+      {completedTasks.length > 0 && (
+        <p className="mb-4 text-slate-400">
+          Total tasks: {completedTasks.length}
+        </p>
+      )}
       {completedTasks.length === 0 && (
         <p className="text-center">You dont have any tasks yet.</p>
       )}
@@ -21,7 +26,6 @@ export default function CompletedTasks({ layoutId }) {
             })}
         </AnimatePresence>
       </ul>
-      {completedTasks.length > 0 && <p>Total tasks: {completedTasks.length}</p>}
     </motion.div>
   );
 }

@@ -10,6 +10,11 @@ export default function IncompletedTasks({ layoutId }) {
   );
   return (
     <motion.div layoutId={layoutId}>
+      {incompletedTasks.length > 0 && (
+        <p className="mb-4 text-slate-400">
+          Total tasks: {incompletedTasks.length}
+        </p>
+      )}
       {incompletedTasks.length === 0 && (
         <p className="text-center">You dont have any tasks yet.</p>
       )}
@@ -18,9 +23,6 @@ export default function IncompletedTasks({ layoutId }) {
           return <TaskItem task={task} key={task._id} />;
         })}
       </ul>
-      {incompletedTasks.length > 0 && (
-        <p>Total tasks: {incompletedTasks.length}</p>
-      )}
     </motion.div>
   );
 }
