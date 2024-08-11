@@ -9,23 +9,48 @@ export default function CompletedTasks({ layoutId }) {
     (task) => task.status === "completed"
   );
   return (
-    <motion.div layoutId={layoutId}>
+    <motion.div
+      variants={{
+        initial: { opacity: 0 },
+        animate: {
+          opacity: 1,
+        },
+        exit: { opacity: 0 },
+      }}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      layoutId={layoutId}
+    >
       {completedTasks.length > 0 && (
-        <p className="mb-4 text-slate-400">
+        <p className="mb-4 text-[.8rem] lg:text-base text-slate-400">
           Total tasks: {completedTasks.length}
         </p>
       )}
       {completedTasks.length === 0 && (
-        <p className="text-center">You dont have any tasks yet.</p>
+        <p className="text-center mt-10 text-sm">
+          You dont have any tasks yet.
+        </p>
       )}
-      <ul className="flex flex-col gap-4 mb-10">
-        <AnimatePresence>
+      <AnimatePresence>
+        <motion.ul
+          variants={{
+            animate: {
+              transition: { staggerChildren: 0.15 },
+            },
+          }}
+          className="flex flex-col gap-4 mb-10"
+        >
           {completedTasks.length > 0 &&
             completedTasks.map((task) => {
-              return <TaskItem task={task} key={task._id} />;
+              return (
+                <AnimatePresence key={task._id}>
+                  <TaskItem task={task} />;
+                </AnimatePresence>
+              );
             })}
-        </AnimatePresence>
-      </ul>
+        </motion.ul>
+      </AnimatePresence>
     </motion.div>
   );
 }

@@ -107,13 +107,13 @@ export default function RootLayout() {
         )}
       </AnimatePresence>
       <div className="bg-emerald-800 min-h-screen">
-        <nav className="flex flex-grow-0 justify-between items-center bg-emerald-950/50 text-slate-100 p-4">
+        <nav className="flex flex-grow-0 justify-between items-center bg-emerald-950/50 text-slate-100 py-4 px-2 lg:px-4">
           <div>
             <h3>Task management app</h3>
           </div>
           <div className="pr-2 lg:pr-10">
             {isLoggedIn && (
-              <div className="flex gap-6  lg:gap-10 ">
+              <div className="flex gap-2  lg:gap-10 ">
                 <button onClick={startCreate}>New Task</button>
                 <button
                   onClick={handleLogoutClick}
@@ -126,7 +126,7 @@ export default function RootLayout() {
             {!isLoggedIn && <button onClick={handleLoginClick}>Login</button>}
           </div>
         </nav>
-        <main className=" pt-32 text-slate-200 px-2  md:px-8 lg:px-44 pb-32">
+        <main className=" pt-20 text-slate-200 px-2  md:px-8 lg:px-44 pb-32">
           {isLoggedIn && <TabMenu />}
           <Outlet />
         </main>

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 import { tasksAction } from "../store";
 
@@ -84,14 +85,23 @@ export default function TaskItem({ task }) {
   }
 
   return (
-    <li className="p-4 rounded-lg border-2 border-emerald-900 shadow-lg">
+    <motion.li
+      variants={{
+        initial: { y: 30, opacity: 0 },
+        animate: { y: 0, opacity: 1, transition: { duration: 0.3 } },
+        exit: { y: -30, opacity: 0 },
+      }}
+      className="p-4 rounded-lg border-2 border-emerald-900 shadow-lg"
+    >
       <div className="flex justify-between mb-2 items-center">
-        <h3 className="font-semibold text-2xl">{task.title}</h3>
-        <p>{formattedDate}</p>
+        <h3 className="font-semibold text-lg lg:text-2xl">{task.title}</h3>
+        <p className="text-sm font-medium tracking-wider">{formattedDate}</p>
       </div>
-      <p>{task.description}</p>
+      <p className="text-sm lg:text-[1rem] font-thin tracking-wider">
+        {task.description}
+      </p>
       <div className="flex justify-between items-center mt-8">
-        <div className="flex text-sm lg:text-inherit gap-4 lg:gap-8">
+        <div className="flex text-[.75rem] md:text-base gap-4 lg:gap-8">
           <button
             onClick={handleIncompletedClick}
             className="text-red-500 hover:underline underline-offset-4"
@@ -119,6 +129,6 @@ export default function TaskItem({ task }) {
           </button>
         </div>
       </div>
-    </li>
+    </motion.li>
   );
 }

@@ -10,7 +10,7 @@ export default function TabMenu() {
   }
   return (
     <>
-      <ul className="flex gap-8 mb-8">
+      <ul className="flex text-[.75rem] sm:text-base gap-8 mb-8">
         <TabButton
           layoutId="tabMenu"
           menu="process"

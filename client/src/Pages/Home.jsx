@@ -39,7 +39,9 @@ export default function HomePage() {
         }
       >
         <Await resolve={data.tasks}>
-          <h1 className="text-4xl font-semibold mb-2">{tabTitle}</h1>
+          <h1 className="text-2xl lg:text-4xl font-semibold mb-2">
+            {tabTitle}
+          </h1>
           {uiState === "process" && <ProcessTasks />}
           {uiState === "completedTasks" && <CompletedTasks />}
           {uiState === "incompletedTasks" && <IncompletedTasks />}
