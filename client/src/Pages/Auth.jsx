@@ -19,7 +19,10 @@ export default function Auth() {
         <div>
           <p className="text-sm lg:text-base">Or</p>
         </div>
-        <button className="border-2 border-green-600 px-2 py-1 lg:px-4 lg:py-2 rounded hover:bg-emerald-700 hover:-translate-y-1 transition-transform">
+        <button
+          disabled
+          className="border-2 disabled:hover:bg-transparent disabled:hover:-translate-y-0 disabled:text-slate-400  border-green-600 px-2 py-1 lg:px-4 lg:py-2 rounded hover:bg-emerald-700 hover:-translate-y-1 transition-transform"
+        >
           Login with Facebook
         </button>
       </div>
